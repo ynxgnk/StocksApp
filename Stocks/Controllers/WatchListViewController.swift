@@ -22,6 +22,15 @@ class WatchListViewController: UIViewController {
     
     //MARK:  - Private
     
+    private func setUpChild() { /* 169 */
+       let vc = PanelViewController() /* 171 */
+        addChild(vc) /* 172 */
+        
+        view.addSubview(vc.view) /* 173 */
+        vc.view.frame = CGRect(x: 0, y: view.height/2, width: view.width, height: view.height) /* 174 */
+        vc.didMove(toParent: self) /* 175 */
+    }
+    
     private func setUpTitleView() { /* 65 */
         let titleView = UIView(
             frame: CGRect(
