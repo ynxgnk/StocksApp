@@ -8,16 +8,13 @@
 import UIKit
 
 class SearchResultTableViewCell: UITableViewCell {
-
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
+    static let identifier = "SearchResultTableViewCell" /* 83 */
+    
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) { /* 84 */
+        super.init(style: style, reuseIdentifier: reuseIdentifier) /* 85 */
     }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
+    
+    required init?(coder: NSCoder) { /* 86 */
+        fatalError() /* 87 */
     }
-
 }

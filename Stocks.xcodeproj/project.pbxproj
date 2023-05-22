@@ -19,6 +19,7 @@
 		BA19A9FF2A1B2FAE00F6D036 /* SearchResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA19A9FE2A1B2FAE00F6D036 /* SearchResultsViewController.swift */; };
 		BA19AA012A1B2FC200F6D036 /* StockDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA19AA002A1B2FC200F6D036 /* StockDetailsViewController.swift */; };
 		BA19AA032A1B344A00F6D036 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA19AA022A1B344A00F6D036 /* Extensions.swift */; };
+		BA19AA052A1B37BB00F6D036 /* SearchResultTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA19AA042A1B37BB00F6D036 /* SearchResultTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +37,7 @@
 		BA19A9FE2A1B2FAE00F6D036 /* SearchResultsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultsViewController.swift; sourceTree = "<group>"; };
 		BA19AA002A1B2FC200F6D036 /* StockDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockDetailsViewController.swift; sourceTree = "<group>"; };
 		BA19AA022A1B344A00F6D036 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		BA19AA042A1B37BB00F6D036 /* SearchResultTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,6 +103,7 @@
 		BA19A9F32A1B2C1700F6D036 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				BA19AA042A1B37BB00F6D036 /* SearchResultTableViewCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -196,6 +199,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BA19A9E22A1B2B7500F6D036 /* WatchListViewController.swift in Sources */,
+				BA19AA052A1B37BB00F6D036 /* SearchResultTableViewCell.swift in Sources */,
 				BA19A9FF2A1B2FAE00F6D036 /* SearchResultsViewController.swift in Sources */,
 				BA19A9DE2A1B2B7500F6D036 /* AppDelegate.swift in Sources */,
 				BA19A9E02A1B2B7500F6D036 /* SceneDelegate.swift in Sources */,
@@ -348,7 +352,6 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -377,7 +380,6 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
