@@ -5,11 +5,14 @@
 //  Created by Nazar Kopeika on 22.05.2023.
 //
 
+import FloatingPanel /* 171 */
 import UIKit
 
 class WatchListViewController: UIViewController {
     
     private var searchTimer: Timer? /* 152 */
+    
+    private var panel: FloatingPanelController? /* 172 */
     
     //MARK: - Lifecycle
     
@@ -17,20 +20,21 @@ class WatchListViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground /* 1 */
         setUpSearchController() /* 55 */
+        setUpFloatingPanel() /* 170 */
         setUpTitleView() /* 66 */
-    }
+    } 
     
     //MARK:  - Private
     
-    private func setUpChild() { /* 169 */
-       let vc = PanelViewController() /* 171 */
-        addChild(vc) /* 172 */
-        
-        view.addSubview(vc.view) /* 173 */
-        vc.view.frame = CGRect(x: 0, y: view.height/2, width: view.width, height: view.height) /* 174 */
-        vc.didMove(toParent: self) /* 175 */
+    private func setUpFloatingPanel() { /* 169 */
+        let vc = TopStoriesNewsViewController() /* 180 */
+        let panel = FloatingPanelController(delegate: self) /* 173 */ /* 182 add delegate */
+        panel.surfaceView.backgroundColor = .secondarySystemBackground /* 175 */
+        panel.set(contentViewController: vc) /* 181 */
+        panel.addPanel(toParent: self) /* 174 */
+        panel.track(scrollView: vc.tableView) /* 186 */
     }
-    
+
     private func setUpTitleView() { /* 65 */
         let titleView = UIView(
             frame: CGRect(
@@ -106,5 +110,11 @@ extension WatchListViewController: SearchResultsViewControllerDelegate { /* 108 
         vc.title = searchResult.description /* 164 */
         present(navVC, animated: true) /* 165 */
 //        print("Did select \(searchResult.displaySymbol)") /* 151 */
+    }
+}
+
+extension WatchListViewController: FloatingPanelControllerDelegate { /* 183 */
+    func floatingPanelDidChangeState(_ fpc: FloatingPanelController) { /* 184 */
+        navigationItem.titleView?.isHidden = fpc.state == .full /* 185 */
     }
 }
