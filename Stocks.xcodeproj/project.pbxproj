@@ -23,6 +23,7 @@
 		BA19AA052A1B37BB00F6D036 /* SearchResultTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA19AA042A1B37BB00F6D036 /* SearchResultTableViewCell.swift */; };
 		BA19AA072A1BA1A900F6D036 /* SearchResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA19AA062A1BA1A900F6D036 /* SearchResponse.swift */; };
 		BA19AA092A1BB13F00F6D036 /* PanelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA19AA082A1BB13F00F6D036 /* PanelViewController.swift */; };
+		BA19AA0B2A1BBE0000F6D036 /* NewsHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA19AA0A2A1BBE0000F6D036 /* NewsHeaderView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -45,6 +46,7 @@
 		BA19AA042A1B37BB00F6D036 /* SearchResultTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultTableViewCell.swift; sourceTree = "<group>"; };
 		BA19AA062A1BA1A900F6D036 /* SearchResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResponse.swift; sourceTree = "<group>"; };
 		BA19AA082A1BB13F00F6D036 /* PanelViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PanelViewController.swift; sourceTree = "<group>"; };
+		BA19AA0A2A1BBE0000F6D036 /* NewsHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsHeaderView.swift; sourceTree = "<group>"; };
 		BDE75AEF3F94B198CE0B02FB /* Pods_Stocks.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Stocks.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -134,6 +136,7 @@
 			isa = PBXGroup;
 			children = (
 				BA19AA042A1B37BB00F6D036 /* SearchResultTableViewCell.swift */,
+				BA19AA0A2A1BBE0000F6D036 /* NewsHeaderView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -278,6 +281,7 @@
 				BA19A9DE2A1B2B7500F6D036 /* AppDelegate.swift in Sources */,
 				BA19A9E02A1B2B7500F6D036 /* SceneDelegate.swift in Sources */,
 				BA19A9FD2A1B2FA100F6D036 /* NewsViewController.swift in Sources */,
+				BA19AA0B2A1BBE0000F6D036 /* NewsHeaderView.swift in Sources */,
 				BA19AA032A1B344A00F6D036 /* Extensions.swift in Sources */,
 				BA19AA012A1B2FC200F6D036 /* StockDetailsViewController.swift in Sources */,
 				BA19AA072A1BA1A900F6D036 /* SearchResponse.swift in Sources */,

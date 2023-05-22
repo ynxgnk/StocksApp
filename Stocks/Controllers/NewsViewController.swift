@@ -8,16 +8,6 @@
 import UIKit
 
 class NewsViewController: UIViewController {
-    
-    let tableView: UITableView = { /* 187 */
-     let table = UITableView() /* 188 */
-        table.backgroundColor = .clear /* 225 */
-        
-        return table /* 189 */
-    }()
-    
-    private let type: Type /* 205 */
-    
     enum `Type` { /* 198 */
         case topStories /* 199 */
         case company(symbol: String) /* 200 */
@@ -31,6 +21,20 @@ class NewsViewController: UIViewController {
             }
         }
     }
+    
+    //MARK: - Properties
+    
+    private var stories = [String]() /* 275 */
+    
+    private let type: Type /* 205 */
+    
+    let tableView: UITableView = { /* 187 */
+     let table = UITableView() /* 188 */
+        table.register(NewsHeaderView.self,
+                       forHeaderFooterViewReuseIdentifier: NewsHeaderView.identifier) /* 263 */
+        table.backgroundColor = .clear /* 225 */
+        return table /* 189 */
+    }()
     
     //MARK: - Init
     
@@ -83,7 +87,11 @@ extension NewsViewController: UITableViewDelegate, UITableViewDataSource { /* 21
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? { /* 222 */
-        return nil
+        guard let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: NewsHeaderView.identifier) as? NewsHeaderView else { /* 265 */
+            return nil /* 266 */
+        }
+        header.configure(with: .init(title: self.type.title, shouldShowAddButton: false)) /* 267 .init is the same as NewsHeaderView.ViewModel */
+        return header /* 268 */
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat { /* 217 */
@@ -91,7 +99,7 @@ extension NewsViewController: UITableViewDelegate, UITableViewDataSource { /* 21
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat { /* 220 */
-        70 /* 221 */
+        return NewsHeaderView.preferredHeight /* 221 */ /* 264 change 70 */
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) { /* 218 */
