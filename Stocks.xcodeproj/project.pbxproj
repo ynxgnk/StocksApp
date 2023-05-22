@@ -16,7 +16,7 @@
 		BA19A9F72A1B2C6B00F6D036 /* APICaller.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA19A9F62A1B2C6B00F6D036 /* APICaller.swift */; };
 		BA19A9F92A1B2C8100F6D036 /* HapticsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA19A9F82A1B2C8100F6D036 /* HapticsManager.swift */; };
 		BA19A9FB2A1B2C9000F6D036 /* PersistenceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA19A9FA2A1B2C9000F6D036 /* PersistenceManager.swift */; };
-		BA19A9FD2A1B2FA100F6D036 /* TopStoriesNewsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA19A9FC2A1B2FA100F6D036 /* TopStoriesNewsViewController.swift */; };
+		BA19A9FD2A1B2FA100F6D036 /* NewsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA19A9FC2A1B2FA100F6D036 /* NewsViewController.swift */; };
 		BA19A9FF2A1B2FAE00F6D036 /* SearchResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA19A9FE2A1B2FAE00F6D036 /* SearchResultsViewController.swift */; };
 		BA19AA012A1B2FC200F6D036 /* StockDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA19AA002A1B2FC200F6D036 /* StockDetailsViewController.swift */; };
 		BA19AA032A1B344A00F6D036 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA19AA022A1B344A00F6D036 /* Extensions.swift */; };
@@ -38,7 +38,7 @@
 		BA19A9F62A1B2C6B00F6D036 /* APICaller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APICaller.swift; sourceTree = "<group>"; };
 		BA19A9F82A1B2C8100F6D036 /* HapticsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapticsManager.swift; sourceTree = "<group>"; };
 		BA19A9FA2A1B2C9000F6D036 /* PersistenceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceManager.swift; sourceTree = "<group>"; };
-		BA19A9FC2A1B2FA100F6D036 /* TopStoriesNewsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopStoriesNewsViewController.swift; sourceTree = "<group>"; };
+		BA19A9FC2A1B2FA100F6D036 /* NewsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsViewController.swift; sourceTree = "<group>"; };
 		BA19A9FE2A1B2FAE00F6D036 /* SearchResultsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultsViewController.swift; sourceTree = "<group>"; };
 		BA19AA002A1B2FC200F6D036 /* StockDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockDetailsViewController.swift; sourceTree = "<group>"; };
 		BA19AA022A1B344A00F6D036 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
@@ -74,7 +74,6 @@
 				229635B9C699F0E4CC1F41C5 /* Pods-Stocks.debug.xcconfig */,
 				922D845574F0CD12E360DAE8 /* Pods-Stocks.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -123,7 +122,7 @@
 			isa = PBXGroup;
 			children = (
 				BA19A9E12A1B2B7500F6D036 /* WatchListViewController.swift */,
-				BA19A9FC2A1B2FA100F6D036 /* TopStoriesNewsViewController.swift */,
+				BA19A9FC2A1B2FA100F6D036 /* NewsViewController.swift */,
 				BA19A9FE2A1B2FAE00F6D036 /* SearchResultsViewController.swift */,
 				BA19AA002A1B2FC200F6D036 /* StockDetailsViewController.swift */,
 				BA19AA082A1BB13F00F6D036 /* PanelViewController.swift */,
@@ -278,7 +277,7 @@
 				BA19A9FF2A1B2FAE00F6D036 /* SearchResultsViewController.swift in Sources */,
 				BA19A9DE2A1B2B7500F6D036 /* AppDelegate.swift in Sources */,
 				BA19A9E02A1B2B7500F6D036 /* SceneDelegate.swift in Sources */,
-				BA19A9FD2A1B2FA100F6D036 /* TopStoriesNewsViewController.swift in Sources */,
+				BA19A9FD2A1B2FA100F6D036 /* NewsViewController.swift in Sources */,
 				BA19AA032A1B344A00F6D036 /* Extensions.swift in Sources */,
 				BA19AA012A1B2FC200F6D036 /* StockDetailsViewController.swift in Sources */,
 				BA19AA072A1BA1A900F6D036 /* SearchResponse.swift in Sources */,
