@@ -8,19 +8,20 @@
 import UIKit
 
 protocol SearchResultsViewControllerDelegate: AnyObject { /* 101 */
-    func searchResultsViewControllerDidSelect(searchResult: String) /* 102 */
+    func searchResultsViewControllerDidSelect(searchResult: SearchResult) /* 102 */ /* 147 change String */
 }
 
 class SearchResultsViewController: UIViewController {
     
     weak var delegate: SearchResultsViewControllerDelegate? /* 103 */
     
-    private var results: [String] = [] /* 113 */
+    private var results: [SearchResult] = [] /* 113 */ /* 142 change String */
     
     private let tableView: UITableView = { /* 80 */
         let table = UITableView() /* 81 */
         table.register(SearchResultTableViewCell.self,
                        forCellReuseIdentifier: SearchResultTableViewCell.identifier) /* 88 */
+        table.isHidden = true /* 158 */
         return table /* 82 */
     }()
 
@@ -41,8 +42,9 @@ class SearchResultsViewController: UIViewController {
         tableView.dataSource = self /* 92 */
     }
     
-    public func update(with results: [String]) { /* 110 */
+    public func update(with results: [SearchResult]) { /* 110 */ /* 141 change String */
         self.results = results /* 111 */
+        tableView.isHidden = results.isEmpty /* 159 if empty - is hidden */
         tableView.reloadData() /* 112 */
     }
     
@@ -50,18 +52,21 @@ class SearchResultsViewController: UIViewController {
 
 extension SearchResultsViewController: UITableViewDelegate, UITableViewDataSource { /* 93 */
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int { /* 94 */
-        10
+        return results.count /* 143 */
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell { /* 95 */
         let cell = tableView.dequeueReusableCell(withIdentifier: SearchResultTableViewCell.identifier, for: indexPath) /* 96 */
-        cell.textLabel?.text = "AAPL" /* 98 */
-        cell.detailTextLabel?.text = "Apple INC" /* 99 */
+        let model = results[indexPath.row] /* 144 */
+        
+        cell.textLabel?.text = model.displaySymbol /* 98 */ /* 145 change "AAPL" */
+        cell.detailTextLabel?.text = model.description /* 99 */ /* 146 change "Apple" */
         return cell /* 97 */
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) { /* 104 */
         tableView.deselectRow(at: indexPath, animated: true) /* 105 */
-        delegate?.searchResultsViewControllerDidSelect(searchResult: "AAPL") /* 106 */
+        let model = results[indexPath.row] /* 148 */
+        delegate?.searchResultsViewControllerDidSelect(searchResult: model) /* 106 */ /* 149 change "AAPL" */
     }
 }

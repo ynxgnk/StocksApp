@@ -9,6 +9,8 @@ import UIKit
 
 class WatchListViewController: UIViewController {
     
+    private var searchTimer: Timer? /* 152 */
+    
     //MARK: - Lifecycle
     
     override func viewDidLoad() {
@@ -57,18 +59,37 @@ extension WatchListViewController: UISearchResultsUpdating { /* 60 */
             return /* 63 */
         }
         
-        //Optimize to reduce number of searches for when user stops typing
+        //Reset timer
+        searchTimer?.invalidate() /* 154 */
         
-        //Call API to search
+        //Kick off new timer
+        //Optimize to reduce number of searches for when user stops typing
+        searchTimer = Timer.scheduledTimer(withTimeInterval: 0.3, repeats: false, block: { _ in /* 153 */
+            //Call API to search
+            APICaller.shared.search(query: query) { result in /* 136 */
+                switch result { /* 137 */
+                case .success(let response): /* 138 */
+                    DispatchQueue.main.async { /* 139 */
+                        resultsVC.update(with: response.result) /* 140 */
+                    }
+                case .failure(let error): /* 138 */
+                    DispatchQueue.main.async { /* 160 */
+                        resultsVC.update(with: []) /* 161 */
+                    }
+                    print(error) /* 138 */
+                }
+            }
+        })
         
         //Update results controller
-        resultsVC.update(with: ["GOOG"]) /* 114 */
+//        resultsVC.update(with: ["GOOG"]) /* 114 */
 //        print(query) /* 64 */
     }
 }
 
 extension WatchListViewController: SearchResultsViewControllerDelegate { /* 108 */
-    func searchResultsViewControllerDidSelect(searchResult: String) { /* 109 */
+    func searchResultsViewControllerDidSelect(searchResult: SearchResult) { /* 109 */ /* 150 change String */
         //Present stock details for given selection
+        print("Did select \(searchResult.displaySymbol)") /* 151 */
     }
 }

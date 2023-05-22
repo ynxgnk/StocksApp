@@ -10,15 +10,36 @@ import Foundation
 final class APICaller { /* 9 */
     static let shared = APICaller() /* 10 */
     
+    //chlm9spr01qs8kipcii0chlm9spr01qs8kipciig
+    
     private struct Constants { /* 34 */
-        static let apiKey = "" /* 35 */
-        static let sandboxApiKey = "" /* 36 */
-        static let baseUrl = "" /* 37 */
+        static let apiKey = "c3c6me2ad3iefuuilms0" /* 35 */
+        static let sandboxApiKey = "sandbox_c3c6me2ad3iefuuilmsg" /* 36 */
+        static let baseUrl = "https://finnhub.io/api/v1/" /* 37 */
     }
     
     private init() {} /* 11 */
     
     //MARK: - Public
+    
+    public func search(
+        query: String,
+        completion: @escaping (Result<SearchResponse, Error>) -> Void /* 132 change String */
+    ) { /* 122 */
+        //        guard let url = url(for: .search, queryParams: ["q":query]) else { /* 123 */ return /* 124 */}
+        guard let safeQuery = query.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) else { /* 155 */
+            return /* 156 */
+        }
+        request(
+            url: url(
+                for: .search,
+                queryParams: ["q":safeQuery] /* 157 change query */
+            ),
+            expecting: SearchResponse.self,
+            completion: completion
+        ) /* 133 */
+    }
+    
     
     //get stock info
     
@@ -40,7 +61,23 @@ final class APICaller { /* 9 */
         for endpoint: Endpoint,
         queryParams: [String: String] = [:]
     ) -> URL? { /* 14 */
-        return nil
+        var urlString = Constants.baseUrl + endpoint.rawValue /* 115 */
+        
+        var queryItems = [URLQueryItem]() /* 116 */
+        //Add any parameters
+        for (name, value) in queryParams { /* 118 */
+            queryItems.append(.init(name: name, value: value)) /* 119 */
+        }
+        
+        //Add token
+        queryItems.append(.init(name: "token", value: Constants.apiKey)) /* 117 */
+        
+        //Convert query items to suffix string
+        urlString += "?" + queryItems.map { "\($0.name)=\($0.value ?? "")" }.joined(separator: "&") /* 121 */
+        
+        print("\n\(urlString)\n") /* 125 */
+        
+        return URL(string: urlString) /* 120 */
     }
     
     private func request<T: Codable>(
