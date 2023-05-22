@@ -18,6 +18,7 @@
 		BA19A9FD2A1B2FA100F6D036 /* TopStoriesNewsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA19A9FC2A1B2FA100F6D036 /* TopStoriesNewsViewController.swift */; };
 		BA19A9FF2A1B2FAE00F6D036 /* SearchResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA19A9FE2A1B2FAE00F6D036 /* SearchResultsViewController.swift */; };
 		BA19AA012A1B2FC200F6D036 /* StockDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA19AA002A1B2FC200F6D036 /* StockDetailsViewController.swift */; };
+		BA19AA032A1B344A00F6D036 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA19AA022A1B344A00F6D036 /* Extensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +35,7 @@
 		BA19A9FC2A1B2FA100F6D036 /* TopStoriesNewsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopStoriesNewsViewController.swift; sourceTree = "<group>"; };
 		BA19A9FE2A1B2FAE00F6D036 /* SearchResultsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultsViewController.swift; sourceTree = "<group>"; };
 		BA19AA002A1B2FC200F6D036 /* StockDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockDetailsViewController.swift; sourceTree = "<group>"; };
+		BA19AA022A1B344A00F6D036 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -118,6 +120,7 @@
 			children = (
 				BA19A9DD2A1B2B7500F6D036 /* AppDelegate.swift */,
 				BA19A9DF2A1B2B7500F6D036 /* SceneDelegate.swift */,
+				BA19AA022A1B344A00F6D036 /* Extensions.swift */,
 			);
 			path = Other;
 			sourceTree = "<group>";
@@ -197,6 +200,7 @@
 				BA19A9DE2A1B2B7500F6D036 /* AppDelegate.swift in Sources */,
 				BA19A9E02A1B2B7500F6D036 /* SceneDelegate.swift in Sources */,
 				BA19A9FD2A1B2FA100F6D036 /* TopStoriesNewsViewController.swift in Sources */,
+				BA19AA032A1B344A00F6D036 /* Extensions.swift in Sources */,
 				BA19AA012A1B2FC200F6D036 /* StockDetailsViewController.swift in Sources */,
 				BA19A9FB2A1B2C9000F6D036 /* PersistenceManager.swift in Sources */,
 				BA19A9F92A1B2C8100F6D036 /* HapticsManager.swift in Sources */,
