@@ -17,6 +17,7 @@ class WatchListViewController: UIViewController {
 
     private func setUpSearchController() { /* 54 */
         let resultVC = SearchResultsViewController() /* 56 */
+        let searchVC = UISearchController(searchResultsController: resultVC) /* 57 */
     }
 
 }
