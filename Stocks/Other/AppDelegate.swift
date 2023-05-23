@@ -23,6 +23,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //            }
 //        }
         
+        debug() /* 286 */
+        
         return true
     }
 
@@ -37,9 +39,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didDiscardSceneSessions sceneSessions: Set<UISceneSession>) {
         
     }
-
-    private func debug() {
-        
+    
+    private func debug() { /* 283 testing function */
+        APICaller.shared.news(for: .company(symbol: "MSFT")) { result in /* 284 */ /* 298 change .topStories to company with MSFT */
+            switch result { /* 299 */
+            case .success(let news): /* 300 */
+                print(news.count) /* 285 */
+            case .failure(let error): /* 300 */
+                break
+            }
+        }
     }
 
 }
