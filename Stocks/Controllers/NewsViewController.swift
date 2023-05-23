@@ -5,6 +5,7 @@
 //  Created by Nazar Kopeika on 22.05.2023.
 //
 
+import SafariServices /* 401 */
 import UIKit
 
 class NewsViewController: UIViewController {
@@ -24,18 +25,9 @@ class NewsViewController: UIViewController {
     
     //MARK: - Properties
     
-    private var stories: [NewsStory] = [ /* 275 */ /* 302 change [String]() */ /* 350 add [NewStory] and remove ["first"] */
-        NewsStory(
-            category: "tech",
-            datetime: 123,
-            headline: "Some headline should go here!",
-            image: "",
-            related: "RElated",
-            source: "CNBC",
-            summary: "",
-            url: ""
-        ) /* 351 */
-    ]
+    private var stories = [NewsStory]() /* 275 */ /* 302 change [String]() */ /* 350 add [NewStory] and remove ["first"] */ /* 389 replace [] to () */
+//        NewsStory(category: "tech", datetime: 123, headline: "Some headline should go here!", image: "", related: "RElated", source: "CNBC", summary: "", url: "") /* 351 test */
+    
     
     private let type: Type /* 205 */
     
@@ -80,11 +72,22 @@ class NewsViewController: UIViewController {
     }
     
     private func fetchNews() { /* 194 */
-        
+        APICaller.shared.news(for: type) { [weak self] result in /* 390 */
+            switch result { /* 391 */
+            case .success(let stories): /* 392 */
+                DispatchQueue.main.async { /* 396 */
+                    self?.stories = stories /* 393 */
+                    self?.tableView.reloadData() /* 394 */
+                }
+            case .failure(let error): /* 392 */
+                print(error) /* 395 */
+            }
+        }
     }
     
     private func open(url: URL) { /* 197 */
-        
+        let vc = SFSafariViewController(url: url) /* 402 */
+        present(vc, animated: true) /* 403 */
     }
 
 }
@@ -127,5 +130,21 @@ extension NewsViewController: UITableViewDelegate, UITableViewDataSource { /* 21
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) { /* 218 */
         tableView.deselectRow(at: indexPath, animated: true) /* 219 */
         //Open news storage
+        let story = stories[indexPath.row] /* 397 */
+        guard let url = URL(string: story.url) else { /* 398 */
+            presentFailedToOpenAlert() /* 405 */
+            return /* 399 */
+        }
+        open(url: url) /* 400 */
+    }
+    
+    private func presentFailedToOpenAlert() { /* 404 */
+        let alert = UIAlertController(
+            title: "Unable to Open",
+            message: "We were unable to open the article.",
+            preferredStyle: .alert
+        ) /* 406 */
+        alert.addAction(UIAlertAction(title: "Dismiss", style: .cancel, handler: nil)) /* 408 */
+        present(alert, animated: true) /* 407 */
     }
 }
