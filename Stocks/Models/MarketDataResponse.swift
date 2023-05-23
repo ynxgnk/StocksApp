@@ -39,7 +39,7 @@ struct MarketDataResponse: Codable { /* 453 */
             ) /* 466 */
         }
         
-        let sortedData = result.sorted(by: { $0.date < $1.date }) /* 468 */
+        let sortedData = result.sorted(by: { $0.date > $1.date }) /* 468 */
 //        print(sortedData[0]) /* 469 */
         return sortedData /* 467 */
     }

@@ -18,7 +18,7 @@ class WatchListViewController: UIViewController {
     private var watchlistMap: [String: [CandleStick]] = [:] /* 433 */ /* 484 change second String */
     
     ///ViewModels
-    private var viewModels: [String] = [] /* 446 */
+    private var viewModels: [WatchListTableViewCell.ViewModel] = [] /* 446 */ /* 532 change String */
     
     private let tableView: UITableView = { /* 425 */
        let table = UITableView() /* 426 */
@@ -65,8 +65,51 @@ class WatchListViewController: UIViewController {
         }
         
         group.notify(queue: .main) { [weak self] in /* 475 */
+            self?.createViewModels() /* 529 */
             self?.tableView.reloadData() /* 439 */ /* 476 add self? */
         }
+    }
+    
+    private func createViewModels() { /* 528 */
+        var viewModels = [WatchListTableViewCell.ViewModel]() /* 530 */
+        
+        for (symbol, candleSticks) in watchlistMap { /* 531 */
+            let changePercentage = getChangePercentage(symbol: symbol, data: candleSticks) /* 539 */
+            viewModels.append(
+                .init(
+                    symbol: symbol,
+                    companyName: UserDefaults.standard.string(forKey: symbol) ?? "Company",
+                    price: getLatestClosingPrice(from: candleSticks),
+                    changeColor: changePercentage < 0 ? .systemRed : .systemGreen,
+                    changePercentage: .percentage(from: changePercentage) /* 568 change "\(changePercentage" */
+                )
+            )
+        }
+//        print("\n\n\(viewModels)\n\n") /* 566 */
+        self.viewModels = viewModels /* 533 */
+    }
+    
+    private func getChangePercentage(symbol: String, data: [CandleStick]) -> Double { /* 538 */
+        let latestDate = data[0].date /* 541 */
+        guard let latestClose = data.first?.close,
+            let priorClose = data.first(where: {
+                !Calendar.current.isDate($0.date, inSameDayAs: latestDate)
+            })?.close else { /* 540 */
+            return 0 /* 542 */
+        }
+        
+//        print("\(symbol): Current (\(latestDate): \(latestClose) | Prior: \(priorClose)") /* 543 */
+        let diff = 1 - (priorClose/latestClose) /* 545 */
+//        print("\(symbol): \(diff)%") /* 546 */
+        return diff /* 544 */
+    }
+    
+    private func getLatestClosingPrice(from data: [CandleStick]) -> String { /* 534 */
+        guard let closingPrice = data.first?.close else { /* 535 */
+            return "" /* 536 */
+        }
+        
+        return .formatted(number: closingPrice) /* 537 */ /* 567 change "\(closingPrice)" */
     }
     
     private func setUpTableView() { /* 423 */

@@ -8,6 +8,27 @@
 import Foundation
 import UIKit /* 68 */
 
+//NumberFormatter
+
+extension NumberFormatter { /* 547 */
+    static let percentFormatter: NumberFormatter = { /* 548 */
+       let formatter = NumberFormatter() /* 549 */
+        formatter.locale = .current /* 550 */
+        formatter.numberStyle = .percent /* 551 */
+        formatter.maximumFractionDigits = 2 /* 552 */
+        return formatter /* 553 */
+    }()
+    
+    static let numberFormatter: NumberFormatter = { /* 554 */
+       let formatter = NumberFormatter() /* 555 */
+        formatter.locale = .current /* 556 */
+        formatter.numberStyle = .decimal /* 557 */
+        formatter.maximumFractionDigits = 2 /* 558 */
+        return formatter /* 559 */
+    }()
+}
+
+//ImageView
 
 extension UIImageView { /* 375 */
     func setImage(with url: URL?) { /* 376 */
@@ -35,6 +56,16 @@ extension String { /* 369 */
     static func string(from timeInterval: TimeInterval) -> String { /* 370 */
         let date = Date(timeIntervalSince1970: timeInterval) /* 371 */
         return DateFormatter.prettyDateFormatter.string(from: date) /* 372 */
+    }
+    
+    static func percentage(from double: Double) -> String { /* 560 */
+        let formatter = NumberFormatter.percentFormatter /* 561 */
+        return formatter.string(from: NSNumber(value: double)) ?? "\(double)" /* 562 */
+    }
+    
+    static func formatted(number: Double) -> String { /* 563 */
+        let formatter = NumberFormatter.numberFormatter /* 564 */
+        return formatter.string(from: NSNumber(value: number)) ?? "\(number)" /* 565 */
     }
 }
 
