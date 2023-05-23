@@ -7,13 +7,16 @@
 
 import Foundation
 
+
+
 final class PersistenceManager  { /* 38 */
     static let shared = PersistenceManager() /* 39 */
     
     private let userDafaults: UserDefaults = .standard /* 47 */
     
     private struct Constants { /* 48 */
-        
+        static let onboardedKey = "hasOnboarded" /* 420 */
+        static let watchListKey = "watchlist" /* 421 */
     }
     
     private init() {} /* 40 */
@@ -21,7 +24,11 @@ final class PersistenceManager  { /* 38 */
     //MARK: - Public
     
     public var watchlist: [String] { /* 41 */
-        return [] /* 42 */
+        if !hasOnboarded { /* 410 */
+            userDafaults.set(true, forKey: Constants.onboardedKey) /* 411 */ /* 420 change hasOnboarded */
+            setUpDefaults() /* 413 */
+        }
+        return userDafaults.stringArray(forKey: Constants.watchListKey) ?? [] /* 42 */ /* 414 change [] */ /* 422 change "watchlist" */
     }
     
     public func addToWatchList() { /* 43 */
@@ -35,6 +42,28 @@ final class PersistenceManager  { /* 38 */
     //MARK: - Private
     
     private var hasOnboarded: Bool { /* 45 */
-        return false /* 46 */
+        return userDafaults.bool(forKey: Constants.onboardedKey) /* 46 */ /* 409 change false */ /* 420 change hasOnboarded */
+    }
+    
+    private func setUpDefaults() { /* 412 */
+        let map: [String: String] = [ /* 415 */
+            "AAPL": "Apple Inc",
+            "MSFT": "Microsoft Corporation",
+            "SNAP": "Snap Inc.",
+            "GOOG": "Alphabet",
+            "AMZN": "Amazon.com, Inc.",
+            "WORK": "Slack Technologies",
+            "FB": "Facebook Inc.",
+            "NVDA": "Nvidia Inc.",
+            "NKE": "Nike",
+            "PINS": "Pinterest Inc."
+        ]
+        
+        let symbols = map.keys.map { $0 } /* 416 */
+        userDafaults.set(symbols, forKey: Constants.watchListKey) /* 417 */ /* 422 change "watchlist" */
+        
+        for (symbol, name) in map { /* 418 */
+            userDafaults.set(name, forKey: symbol) /* 419 */
+        }
     }
 }

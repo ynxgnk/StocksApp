@@ -14,17 +14,47 @@ class WatchListViewController: UIViewController {
     
     private var panel: FloatingPanelController? /* 172 */
     
+    ///Model
+    private var watchlistMap: [String: [String]] = [:] /* 433 */
+    
+    ///ViewModels
+    private var viewModels: [String] = [] /* 446 */
+    
+    private let tableView: UITableView = { /* 425 */
+       let table = UITableView() /* 426 */
+        
+        return table /* 427 */
+    }()
+    
     //MARK: - Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground /* 1 */
         setUpSearchController() /* 55 */
+        setUpTableView() /* 424 */
+        setUpWatchlistData() /* 435 */
         setUpFloatingPanel() /* 170 */
         setUpTitleView() /* 66 */
-    } 
+    }
+    
+    private func setUpTableView() { /* 423 */
+        view.addSubview(tableView) /* 428 */
+        tableView.delegate = self /* 429 */
+        tableView.dataSource = self /* 430 */
+    }
     
     //MARK:  - Private
+    
+    private func setUpWatchlistData() { /* 434 */
+        let symbols = PersistenceManager.shared.watchlist /* 436 */
+        for symbol in symbols { /* 437 */
+            //Fetch market data per symbol
+            watchlistMap[symbol] = ["some string"] /* 438 */
+        }
+        
+        tableView.reloadData() /* 439 */
+    }
     
     private func setUpFloatingPanel() { /* 169 */
         let vc = NewsViewController(type: .topStories) /* 180 */ /* 224 add type */
@@ -116,5 +146,20 @@ extension WatchListViewController: SearchResultsViewControllerDelegate { /* 108 
 extension WatchListViewController: FloatingPanelControllerDelegate { /* 183 */
     func floatingPanelDidChangeState(_ fpc: FloatingPanelController) { /* 184 */
         navigationItem.titleView?.isHidden = fpc.state == .full /* 185 */
+    }
+}
+
+extension WatchListViewController: UITableViewDelegate, UITableViewDataSource { /* 431 */
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int { /* 432 */
+        return watchlistMap.count /* 441 */
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell { /* 442 */
+        return UITableViewCell() /* 443 */
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) { /* 444 */
+        tableView.deselectRow(at: indexPath, animated: true) /* 445 */
+        //Open Details for selection
     }
 }

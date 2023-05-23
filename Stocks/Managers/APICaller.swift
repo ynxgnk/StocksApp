@@ -68,6 +68,13 @@ final class APICaller { /* 9 */
     }
 
     //get stock info
+    public func marketData(
+        for symbol: String,
+        numberOfDays: Int = 7,
+        completion: @escaping (Result<String, Error>) -> Void
+    ) { /* 447 */
+        
+    }
     
     //search stocks
     
