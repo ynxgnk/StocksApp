@@ -15,7 +15,7 @@ class WatchListViewController: UIViewController {
     private var panel: FloatingPanelController? /* 172 */
     
     ///Model
-    private var watchlistMap: [String: [String]] = [:] /* 433 */
+    private var watchlistMap: [String: [CandleStick]] = [:] /* 433 */ /* 484 change second String */
     
     ///ViewModels
     private var viewModels: [String] = [] /* 446 */
@@ -33,27 +33,46 @@ class WatchListViewController: UIViewController {
         view.backgroundColor = .systemBackground /* 1 */
         setUpSearchController() /* 55 */
         setUpTableView() /* 424 */
-        setUpWatchlistData() /* 435 */
+        fetchWatchlistData() /* 435 */
         setUpFloatingPanel() /* 170 */
         setUpTitleView() /* 66 */
+    }
+    
+    //MARK:  - Private
+    
+    private func fetchWatchlistData() { /* 434 */
+        let symbols = PersistenceManager.shared.watchlist /* 436 */
+        
+        let group = DispatchGroup() /* 473 */
+        
+        for symbol in symbols { /* 437 */
+            group.enter() /* 474 */
+            //Fetch market data per symbol
+            APICaller.shared.marketData(for: symbol) { [weak self] result in /* 477 */ /* 485 add weak self */
+                defer { /* 478 */
+                    group.leave() /* 479 */
+                }
+                
+                switch result { /* 480 */
+                case .success(let data): /* 481 */
+                    let candleSticks = data.candleSticks /* 482 */
+                    self?.watchlistMap[symbol] = candleSticks /* 486 */
+                case .failure(let error): /* 481 */
+                    print(error) /* 483 */
+                }
+            }
+//            watchlistMap[symbol] = ["some string"] /* 438 */
+        }
+        
+        group.notify(queue: .main) { [weak self] in /* 475 */
+            self?.tableView.reloadData() /* 439 */ /* 476 add self? */
+        }
     }
     
     private func setUpTableView() { /* 423 */
         view.addSubview(tableView) /* 428 */
         tableView.delegate = self /* 429 */
         tableView.dataSource = self /* 430 */
-    }
-    
-    //MARK:  - Private
-    
-    private func setUpWatchlistData() { /* 434 */
-        let symbols = PersistenceManager.shared.watchlist /* 436 */
-        for symbol in symbols { /* 437 */
-            //Fetch market data per symbol
-            watchlistMap[symbol] = ["some string"] /* 438 */
-        }
-        
-        tableView.reloadData() /* 439 */
     }
     
     private func setUpFloatingPanel() { /* 169 */

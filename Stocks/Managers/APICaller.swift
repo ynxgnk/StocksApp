@@ -70,9 +70,27 @@ final class APICaller { /* 9 */
     //get stock info
     public func marketData(
         for symbol: String,
-        numberOfDays: Int = 7,
-        completion: @escaping (Result<String, Error>) -> Void
+        numberOfDays: TimeInterval = 7,
+        completion: @escaping (Result<MarketDataResponse, Error>) -> Void /* 458 change String */
     ) { /* 447 */
+        let today = Date().addingTimeInterval(-(Constants.day)) /* 450 */
+        let prior = today.addingTimeInterval(-(Constants.day * numberOfDays)) /* 451 */
+        let url = url(
+            for: .marketData,
+            queryParams: [
+                "symbol": symbol,
+                "resolution": "1",
+                "from": "\(Int(prior.timeIntervalSince1970))",
+                "to": "\(Int(today.timeIntervalSince1970))"
+            ]
+            
+        ) /* 449 */
+        
+        request(
+            url: url,
+            expecting: MarketDataResponse.self, /* 457 change String */
+            completion: completion
+        ) /* 452 */
         
     }
     
@@ -84,6 +102,7 @@ final class APICaller { /* 9 */
         case search /* 13 */
         case topStories = "news" /* 277 */
         case companyNews = "company-news" /* 289 */
+        case marketData = "stock/candle" /* 448 */
     }
     
     private enum APIError: Error { /* 29 */
