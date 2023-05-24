@@ -29,6 +29,8 @@ class WatchListViewController: UIViewController {
         return table /* 427 */
     }()
     
+    private var observer: NSObjectProtocol? /* 640 */
+    
     //MARK: - Lifecycle
     
     override func viewDidLoad() {
@@ -39,6 +41,7 @@ class WatchListViewController: UIViewController {
         fetchWatchlistData() /* 435 */
         setUpFloatingPanel() /* 170 */
         setUpTitleView() /* 66 */
+        setUpObserver() /* 639 */
     }
     
     override func viewDidLayoutSubviews() { /* 577 */
@@ -48,12 +51,23 @@ class WatchListViewController: UIViewController {
     
     //MARK:  - Private
     
+    private func setUpObserver() { /* 638 */
+        observer = NotificationCenter.default.addObserver(
+            forName: .didAddToWatchList,
+            object: nil,
+            queue: .main
+            ) { [weak self] _ in /* 641 */
+                self?.viewModels.removeAll() /* 642 */
+                self?.fetchWatchlistData() /* 643 */
+            }
+    }
+    
     private func fetchWatchlistData() { /* 434 */
         let symbols = PersistenceManager.shared.watchlist /* 436 */
         
         let group = DispatchGroup() /* 473 */
         
-        for symbol in symbols { /* 437 */
+        for symbol in symbols where watchlistMap[symbol] == nil { /* 437 */ /* 644 add where... */
             group.enter() /* 474 */
             //Fetch market data per symbol
             APICaller.shared.marketData(for: symbol) { [weak self] result in /* 477 */ /* 485 add weak self */
@@ -210,7 +224,10 @@ extension WatchListViewController: SearchResultsViewControllerDelegate { /* 108 
         //Present stock details for given selection
         navigationItem.searchController?.searchBar.resignFirstResponder() /* 166 */
         
-        let vc = StockDetailsViewController() /* 162 */
+        let vc = StockDetailsViewController(
+            symbol: searchResult.displaySymbol,
+            companyName: searchResult.description
+        ) /* 162 */ /* 658 add 3 parameters */
         let navVC = UINavigationController(rootViewController: vc) /* 163 */
         vc.title = searchResult.description /* 164 */
         present(navVC, animated: true) /* 165 */
@@ -271,6 +288,14 @@ extension WatchListViewController: UITableViewDelegate, UITableViewDataSource { 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) { /* 444 */
         tableView.deselectRow(at: indexPath, animated: true) /* 445 */
         //Open Details for selection
+        let viewModel = viewModels[indexPath.row] /* 656 */
+        let vc = StockDetailsViewController(
+            symbol: viewModel.symbol,
+            companyName: viewModel.companyName,
+            candleStickData: watchlistMap[viewModel.symbol] ?? []
+        ) /* 645 */ /* 657 add 3 parameters */
+        let navVC = UINavigationController(rootViewController: vc) /* 646 */
+        present(navVC, animated: true) /* 647 */
     }
 }
 
