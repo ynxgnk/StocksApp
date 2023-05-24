@@ -7,5 +7,5 @@ target 'Stocks' do
 
  pod 'FloatingPanel'
 pod 'SDWebImage'
-
+pod 'Charts'
 end

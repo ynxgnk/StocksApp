@@ -95,6 +95,18 @@ class StockDetailsViewController: UIViewController {
         //Fetch candle sticks if needed
         if candleStickData.isEmpty { /* 741 */
             group.enter() /* 742 */
+            APICaller.shared.marketData(for: symbol) { [weak self] result in /* 863 */
+                defer { /* 864 */
+                    group.leave() /* 865 */
+                }
+                
+                switch result { /* 866 */
+                case .success(let response): /* 867 */
+                    self?.candleStickData = response.candleSticks /* 868 */
+                case .failure(let error): /* 867 */
+                    print(error) /* 868 */
+                }
+            }
         }
         //Fetch financial metrics
         group.enter() /* 743 */
@@ -143,7 +155,7 @@ class StockDetailsViewController: UIViewController {
             )
         ) /* 778 */
         
-        headerView.backgroundColor = .link /* 782 */
+        headerView.backgroundColor = .systemBackground /* 782 */
         
         var viewModels = [MetricCollectionViewCell.ViewModel]() /* 827 */
         if let metrics = metrics { /* 828 */
@@ -156,7 +168,11 @@ class StockDetailsViewController: UIViewController {
         
         //Configure
         headerView.configure(
-            chartViewModel: .init(data: [], showLegend: false, showAxis: false),
+            chartViewModel: .init(
+                data: candleStickData.reversed().map { $0.close }, /* 861 change [] */
+                showLegend: true,
+                showAxis: true
+            ),
             metricViewModels: viewModels
         ) /* 826 */
         

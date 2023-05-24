@@ -53,7 +53,7 @@ class StockDetailHeaderView: UIView, UICollectionViewDelegate, UICollectionViewD
         metricViewModels: [MetricCollectionViewCell.ViewModel] /* 821 */
     ) { /* 777 */
         //Update chart
-        
+        chartView.configure(with: chartViewModel) /* 862 */
         self.metricViewModels = metricViewModels /* 822 */
         collectionView.reloadData() /* 823 */
     }
