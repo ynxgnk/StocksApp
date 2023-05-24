@@ -28,6 +28,8 @@ class StockDetailsViewController: UIViewController {
     
     private var stories: [NewsStory] = [] /* 683 */
     
+    private var metrics: Metrics? /* 824 */
+    
     //MARK: Init
     
     init(
@@ -84,7 +86,8 @@ class StockDetailsViewController: UIViewController {
         view.addSubview(tableView) /* 672 */
         tableView.delegate = self /* 673 */
         tableView.dataSource = self /* 674 */
-        tableView.tableHeaderView = UIView(frame: CGRect(x: 0, y: 0, width: view.width, height: (view.width*0.7) + 100)) /* 721 */
+        tableView.tableHeaderView = UIView(frame: CGRect(x: 0, y: 0, width: view.width, height: (view.width*0.7) + 100)
+        ) /* 721 */
     }
     
     private func fetchFinancialData() { /* 666 */
@@ -102,7 +105,8 @@ class StockDetailsViewController: UIViewController {
             switch result { /* 747 */
             case .success(let response): /* 748 */
                 let metrics = response.metric /* 749 */
-                print(metrics) /* 780 */
+                self?.metrics = metrics /* 825 */
+//                print(metrics) /* 780 */
             case .failure(let error): /* 748 */
                 print(error) /* 749 */
             }
@@ -141,7 +145,20 @@ class StockDetailsViewController: UIViewController {
         
         headerView.backgroundColor = .link /* 782 */
         
+        var viewModels = [MetricCollectionViewCell.ViewModel]() /* 827 */
+        if let metrics = metrics { /* 828 */
+            viewModels.append(.init(name: "52W High", value: "\(metrics.AnnualWeekHigh)")) /* 829 */
+            viewModels.append(.init(name: "52L High", value: "\(metrics.AnnualWeekLow)")) /* 830 */
+            viewModels.append(.init(name: "52W Return", value: "\(metrics.AnnualWeekPriceReturnDaily)")) /* 831 */
+            viewModels.append(.init(name: "beta", value: "\(metrics.beta)")) /* 832 */
+            viewModels.append(.init(name: "10D Vol.", value: "\(metrics.TenDayAverageTradingVolume)")) /* 833 */
+        }
+        
         //Configure
+        headerView.configure(
+            chartViewModel: .init(data: [], showLegend: false, showAxis: false),
+            metricViewModels: viewModels
+        ) /* 826 */
         
         tableView.tableHeaderView = headerView /* 779 */
     }
