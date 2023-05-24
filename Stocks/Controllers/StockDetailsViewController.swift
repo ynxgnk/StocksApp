@@ -5,6 +5,7 @@
 //  Created by Nazar Kopeika on 22.05.2023.
 //
 
+import SafariServices /* 708 */
 import UIKit
 
 class StockDetailsViewController: UIViewController {
@@ -15,6 +16,17 @@ class StockDetailsViewController: UIViewController {
     private let symbol: String /* 653  */
     private let companyName: String /* 654 */
     private var candleStickData: [CandleStick] /* 655 */
+    
+    private let tableView: UITableView = { /* 659 */
+       let table = UITableView() /* 660 */
+        table.register(NewsHeaderView.self,
+                       forHeaderFooterViewReuseIdentifier: NewsHeaderView.identifier) /* 661 */
+        table.register(NewsStoryTableViewCell.self,
+                       forCellReuseIdentifier: NewsStoryTableViewCell.identifier) /* 662 */
+        return table /* 663 */
+    }()
+    
+    private var stories: [NewsStory] = [] /* 683 */
     
     //MARK: Init
     
@@ -38,6 +50,137 @@ class StockDetailsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground /* 167 */
+        title = companyName /* 722 */
+        setUpCloseButton() /* 724 */
+        //Show view
+        setUpTable() /* 665 */
+        //Fetch Financial data
+        fetchFinancialData() /* 667 */
+        //Show chart/Graph
+        //Show News
+        fetchNews() /* 670 */
+    }
+    
+    override func viewDidLayoutSubviews() { /* 675 */
+        super.viewDidLayoutSubviews() /* 676 */
+        tableView.frame = view.bounds /* 677 */
+    }
+    
+    //MARK: - Privete
+    
+    private func setUpCloseButton() { /* 723 */
+        navigationItem.rightBarButtonItem = UIBarButtonItem(
+            barButtonSystemItem: .close,
+            target: self,
+            action: #selector(didTapClose)
+        ) /* 725 */
+    }
+    
+    @objc private func didTapClose() { /* 726 */
+        dismiss(animated: true, completion: nil) /* 727 */
+    }
+    
+    func setUpTable() { /* 664 */
+        view.addSubview(tableView) /* 672 */
+        tableView.delegate = self /* 673 */
+        tableView.dataSource = self /* 674 */
+        tableView.tableHeaderView = UIView(frame: CGRect(x: 0, y: 0, width: view.width, height: (view.width*0.7) + 100)) /* 721 */
+    }
+    
+    private func fetchFinancialData() { /* 666 */
+        //Fetch candle sticks if needed
+        
+        //Fetch financial metrics
+        
+        //Render chart
+        renderChart() /* 669 */
+    }
+    
+    private func fetchNews() { /* 671 */
+        APICaller.shared.news(for: .company(symbol: symbol)) { [weak self] result in /* 700 */
+            switch result { /* 701 */
+            case .success(let stories): /* 702 */
+                DispatchQueue.main.async { /* 705 */
+                    self?.stories = stories /* 703 */
+                    self?.tableView.reloadData() /* 704 */
+                }
+            case .failure(let error): /* 702 */
+                print(error) /* 703 */
+            }
+        }
+    }
+    
+    private func renderChart() { /* 668 */
+        
     }
 
+}
+
+
+extension StockDetailsViewController: UITableViewDelegate, UITableViewDataSource { /* 678 */
+    //681
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int { /* 682 */
+        return stories.count /* 684 */
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell { /* 685 */
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: NewsStoryTableViewCell.identifier, for: indexPath) as? NewsStoryTableViewCell else { /* 686 */
+            fatalError() /* 687 */
+        }
+        cell.configure(with: .init(model: stories[indexPath.row])) /* 688 */
+        return cell /* 689 */
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat { /* 690 */
+        return NewsStoryTableViewCell.preferredHeight /* 691 */
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? { /* 681 */
+        guard let header = tableView.dequeueReusableHeaderFooterView( /* 692 */
+            withIdentifier: NewsHeaderView.identifier
+        ) as? NewsHeaderView else { /* 693 */
+            return nil /* 694 */
+        }
+        header.delegate = self /* 695 */
+        header.configure(
+            with: .init(
+                title: symbol.uppercased(),
+                shouldShowAddButton: !PersistenceManager.shared.watchlistContains(symbol: symbol) /* 715 change true */
+            )
+        ) /* 696 */
+        return header /* 697 */
+    }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat { /* 698 */
+        return NewsHeaderView.preferredHeight /* 699 */
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) { /* 706 */
+        tableView.deselectRow(at: indexPath, animated: true) /* 707 */
+        guard let url = URL(string: stories[indexPath.row].url) else { /* 709 */
+            return /* 710 */
+        }
+        let vc = SFSafariViewController(url: url) /* 711 */
+        present(vc, animated: true) /* 712 */
+    }
+}
+
+extension StockDetailsViewController: NewsHeaderViewDelegate { /* 679 */
+    func newsHeaderViewDidTapAddButton(_ headerView: NewsHeaderView) { /* 680 */
+        //Add to watchlist
+        headerView.button.isHidden = true /* 716 */
+        PersistenceManager.shared.addToWatchList(
+            symbol: symbol,
+            companyName: companyName
+        ) /* 717 */
+        
+        let alert = UIAlertController(
+            title: "Added to Watchlist",
+            message: "We have added \(companyName) to your watchlist",
+            preferredStyle: .alert
+        ) /* 718 */
+        alert.addAction(UIAlertAction(title: "Dismiss", style: .cancel, handler: nil)) /* 719 */
+        present(alert, animated: true) /* 720 */
+    }
 }
