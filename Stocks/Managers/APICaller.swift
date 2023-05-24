@@ -96,6 +96,23 @@ final class APICaller { /* 9 */
     
     //search stocks
     
+    public func financialMetrics(
+        for symbol: String,
+        completion: @escaping (Result<FinancialMetricsResponse, Error>) -> Void /* 738 change String */
+    ) { /* 728 */
+        let url = url(
+            for: .financials,
+            queryParams: ["symbol": symbol, "metric": "all"]
+        ) /* 730 */
+        
+        request(
+            url: url,
+            expecting: FinancialMetricsResponse.self, /* 739 change String */
+            completion: completion
+        ) /* 731 */
+    }
+    
+    
     //MARK: - Private
     
     private enum Endpoint: String { /* 12 */
@@ -103,6 +120,7 @@ final class APICaller { /* 9 */
         case topStories = "news" /* 277 */
         case companyNews = "company-news" /* 289 */
         case marketData = "stock/candle" /* 448 */
+        case financials = "stock/metric" /* 729 */
     }
     
     private enum APIError: Error { /* 29 */

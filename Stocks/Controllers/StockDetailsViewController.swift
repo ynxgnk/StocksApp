@@ -58,7 +58,7 @@ class StockDetailsViewController: UIViewController {
         fetchFinancialData() /* 667 */
         //Show chart/Graph
         //Show News
-        fetchNews() /* 670 */
+        fetchNews() /* 670 */ 
     }
     
     override func viewDidLayoutSubviews() { /* 675 */
@@ -88,11 +88,29 @@ class StockDetailsViewController: UIViewController {
     }
     
     private func fetchFinancialData() { /* 666 */
+        let group = DispatchGroup() /* 740 */
         //Fetch candle sticks if needed
-        
+        if candleStickData.isEmpty { /* 741 */
+            group.enter() /* 742 */
+        }
         //Fetch financial metrics
-        
+        group.enter() /* 743 */
+        APICaller.shared.financialMetrics(for: symbol) { [weak self] result in /* 744 */ /* 781 add weak self */
+            defer { /* 745 */
+                group.leave() /* 746 */
+            }
+            switch result { /* 747 */
+            case .success(let response): /* 748 */
+                let metrics = response.metric /* 749 */
+                print(metrics) /* 780 */
+            case .failure(let error): /* 748 */
+                print(error) /* 749 */
+            }
+        }
         //Render chart
+        group.notify(queue: .main) { [weak self] in /* 750 */
+            self?.renderChart() /* 751 */
+        }
         renderChart() /* 669 */
     }
     
@@ -111,9 +129,23 @@ class StockDetailsViewController: UIViewController {
     }
     
     private func renderChart() { /* 668 */
+        //Chart VM | FinancialMetricViewModel(s)
+        let headerView = StockDetailHeaderView(
+            frame: CGRect(
+                x: 0,
+                y: 0,
+                width: view.width,
+                height: (view.width*0.7) + 100
+            )
+        ) /* 778 */
         
+        headerView.backgroundColor = .link /* 782 */
+        
+        //Configure
+        
+        tableView.tableHeaderView = headerView /* 779 */
     }
-
+    
 }
 
 
