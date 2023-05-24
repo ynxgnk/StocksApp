@@ -127,8 +127,7 @@ final class APICaller { /* 9 */
         
         //Convert query items to suffix string
         urlString += "?" + queryItems.map { "\($0.name)=\($0.value ?? "")" }.joined(separator: "&") /* 121 */
-        
-        print("\n\(urlString)\n") /* 125 */
+//        print("\n\(urlString)\n") /* 125 */
         
         return URL(string: urlString) /* 120 */
     }

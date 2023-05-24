@@ -242,6 +242,32 @@ extension WatchListViewController: UITableViewDelegate, UITableViewDataSource { 
         return WatchListTableViewCell.preferredHeight /* 576 */
     }
     
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool { /* 614 */
+        return true /* 615 */
+    }
+    
+    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle { /* 616 */
+        return .delete /* 617 */
+        
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) { /* 618 */
+        if editingStyle == .delete { /* 619 */
+            tableView.beginUpdates() /* 620 */
+            //Update persistence
+            PersistenceManager.shared.removeFromWatchList(symbol: viewModels[indexPath.row].symbol) /* 622 */
+            
+            //Update viewModels
+            viewModels.remove(at: indexPath.row) /* 621 */
+            
+            //delete row
+            tableView.deleteRows(at: [indexPath], with: .automatic) /* 623 */
+            
+            tableView.endUpdates() /* 624 */
+            
+        }
+    }
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) { /* 444 */
         tableView.deselectRow(at: indexPath, animated: true) /* 445 */
         //Open Details for selection
