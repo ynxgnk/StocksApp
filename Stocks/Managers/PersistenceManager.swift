@@ -7,22 +7,26 @@
 
 import Foundation
 
-
-
+///Object to manage saved caches
 final class PersistenceManager  { /* 38 */
+    ///Singleton
     static let shared = PersistenceManager() /* 39 */
     
+    ///Reference to user defauts
     private let userDafaults: UserDefaults = .standard /* 47 */
     
+    ///Constants
     private struct Constants { /* 48 */
         static let onboardedKey = "hasOnboarded" /* 420 */
         static let watchListKey = "watchlist" /* 421 */
     }
     
+    ///Privatized constructor
     private init() {} /* 40 */
     
     //MARK: - Public
     
+    ///Get user watchlist
     public var watchlist: [String] { /* 41 */
         if !hasOnboarded { /* 410 */
             userDafaults.set(true, forKey: Constants.onboardedKey) /* 411 */ /* 420 change hasOnboarded */
@@ -31,10 +35,17 @@ final class PersistenceManager  { /* 38 */
         return userDafaults.stringArray(forKey: Constants.watchListKey) ?? [] /* 42 */ /* 414 change [] */ /* 422 change "watchlist" */
     }
     
+    /// Check if watch ist contains item
+    /// - Parameter symbol: Sybol to check
+    /// - Returns: Boolean
     public func watchlistContains(symbol: String) -> Bool { /* 713 */
         return watchlist.contains(symbol) /* 714 */
     }
     
+    /// Add a symbol to watchlist
+    /// - Parameters:
+    ///   - symbol: Symbol to add
+    ///   - companyName: Company name for symbol being added
     public func addToWatchList(symbol: String, companyName: String) { /* 43 */
         var current = watchlist /* 631 */
         current.append(symbol) /* 632 */
@@ -44,6 +55,8 @@ final class PersistenceManager  { /* 38 */
         NotificationCenter.default.post(name: .didAddToWatchList, object: nil) /* 637 */
     }
     
+    /// Remove item from watchlist
+    /// - Parameter symbol: Symbol to remove
     public func removeFromWatchList(symbol: String) { /* 44 */
         var newList = [String]() /* 625 */
         
@@ -59,10 +72,12 @@ final class PersistenceManager  { /* 38 */
     
     //MARK: - Private
     
+    /// Check if user has been onboarded
     private var hasOnboarded: Bool { /* 45 */
         return userDafaults.bool(forKey: Constants.onboardedKey) /* 46 */ /* 409 change false */ /* 420 change hasOnboarded */
     }
     
+    /// Set up default watchlist items
     private func setUpDefaults() { /* 412 */
         let map: [String: String] = [ /* 415 */
             "AAPL": "Apple Inc",

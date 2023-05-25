@@ -12,6 +12,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     
     
+    /// Get called when app launches
+    /// - Parameters:
+    ///   - application: App instance
+    ///   - launchOptions: Launch properties
+    /// - Returns: Bool for success of failure
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
         //        APICaller.shared.search(query: "Apple") { result in /* 126 */
@@ -23,7 +28,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         //            }
         //        }
         
-        debug() /* 286 */
+//        debug() /* 286 */
         
         return true
     }
@@ -31,8 +36,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // MARK: UISceneSession Lifecycle
     
     func application(_ application: UIApplication, configurationForConnecting connectingSceneSession: UISceneSession, options: UIScene.ConnectionOptions) -> UISceneConfiguration {
-        // Called when a new scene session is being created.
-        // Use this method to select a configuration to create the new scene with.
+        
         return UISceneConfiguration(name: "Default Configuration", sessionRole: connectingSceneSession.role)
     }
     
@@ -40,17 +44,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
     }
     
-    private func debug() { /* 283 testing function */
-        APICaller.shared.marketData(for: "AAPL", numberOfDays: 1) { result in /* 459 */
-            switch result { /* 470 */
-            case .success(let data): /* 471 */
-                let candleSticks = data.candleSticks /* 472 */
-            case .failure(let error): /* 471 */
-                print(error) /* 460 */
-            }
-        }
-        
-    }
+//    private func debug() { /* 283 testing function */
+//        APICaller.shared.marketData(for: "AAPL", numberOfDays: 1) { result in /* 459 */
+//            switch result { /* 470 */
+//            case .success(let data): /* 471 */
+//                let candleSticks = data.candleSticks /* 472 */
+//            case .failure(let error): /* 471 */
+//                print(error) /* 460 */
+//            }
+//        }
+//
+//    }
 }
     // was in func debug
     //        APICaller.shared.news(for: .company(symbol: "MSFT")) { result in /* 284 */ /* 298 change .topStories to company with MSFT */
@@ -62,3 +66,4 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     //            }
     //        }
     //    }
+

@@ -7,17 +7,23 @@
 
 import UIKit
 
+/// Delegate to notify of cell events
 protocol WatchListTableViewCellDelegate: AnyObject { /* 594 */
     func didUpdateMaxWidth() /* 595 */
 }
 
-class WatchListTableViewCell: UITableViewCell {
+/// Table cell for watch list item
+final class WatchListTableViewCell: UITableViewCell {
+    /// cell Identifier
    static let identifier = "WatchListTableViewCell" /* 487 */
     
+    /// Delegate
     weak var delegate: WatchListTableViewCellDelegate? /* 596 */
     
+    /// Ideal height of cell
     static let preferredHeight: CGFloat = 60 /* 488 */
     
+    /// WatchList tableCell ViewModel
     struct ViewModel { /* 489 */
         let symbol: String /* 526 */
         let companyName: String /* 526 */
@@ -28,21 +34,21 @@ class WatchListTableViewCell: UITableViewCell {
         
     }
     
-    //Symbol Label
+    ///Symbol Label
     private let symbolLabel: UILabel = { /* 499 */
        let label = UILabel() /* 500 */
         label.font = .systemFont(ofSize: 16, weight: .medium) /* 501 */
         return label /* 502 */
     }()
     
-    //Company Label
+    ///Company Label
     private let nameLabel: UILabel = { /* 503 */
        let label = UILabel() /* 504 */
         label.font = .systemFont(ofSize: 15, weight: .regular) /* 505 */
         return label /* 506 */
     }()
         
-    //Price Label
+    ///Price Label
     private let priceLabel: UILabel = { /* 507 */
        let label = UILabel() /* 508 */
         label.font = .systemFont(ofSize: 15, weight: .regular) /* 509 */
@@ -50,7 +56,7 @@ class WatchListTableViewCell: UITableViewCell {
         return label /* 510 */
     }()
     
-    //Change Label
+    ///Change Label
     private let changeLabel: UILabel = { /* 511 */
        let label = UILabel() /* 512 */
         label.textAlignment = .right /* 604 */
@@ -61,7 +67,7 @@ class WatchListTableViewCell: UITableViewCell {
         return label /* 515 */
     }()
     
-    //MiniChart View
+    ///MiniChart View
     private let miniChartView: StockChartView = { /* 522 */
        let chart = StockChartView() /* 587 */
 //        chart.backgroundColor = .link /* 588 */
@@ -69,6 +75,8 @@ class WatchListTableViewCell: UITableViewCell {
         chart.clipsToBounds = true /* 611 */
         return chart /* 589 */
     }()
+    
+    //MARK: - Init
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) { /* 490 */
         super.init(style: style, reuseIdentifier: reuseIdentifier) /* 491 */
@@ -149,6 +157,8 @@ class WatchListTableViewCell: UITableViewCell {
         miniChartView.reset() /* 524 */
     }
     
+    /// Configure view
+    /// - Parameter viewModel: View ViewModel
     public func configure(with viewModel: ViewModel) { /* 498 */
         symbolLabel.text = viewModel.symbol /* 527 */
         nameLabel.text = viewModel.companyName /* 527 */
@@ -158,5 +168,4 @@ class WatchListTableViewCell: UITableViewCell {
         //Configure Chart
         miniChartView.configure(with: viewModel.chartViewModel) /* 853 */
     }
-    
 }

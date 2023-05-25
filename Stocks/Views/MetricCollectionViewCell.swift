@@ -7,25 +7,32 @@
 
 import UIKit
 
-class MetricCollectionViewCell: UICollectionViewCell {
+/// Metric table cell
+final class MetricCollectionViewCell: UICollectionViewCell {
+    /// Ccell identifier
     static let identifier = "MetricCollectionViewCell" /* 786 */
     
+    /// Metric table cell viewModel
     struct ViewModel { /* 795 */
         let name: String /* 796 */
         let value: String /* 796 */
     }
     
+    /// Name Label
     private let nameLabel: UILabel = { /* 797 */
        let label = UILabel() /* 798 */
         
         return label /* 799 */
     }()
     
+    /// Value Label
     private let valueLabel: UILabel = { /* 800 */
        let label = UILabel() /* 801 */
         label.textColor = .secondaryLabel /* 802 */
         return label /* 803 */
     }()
+    
+    //MARK: - Init
     
     override init(frame: CGRect) { /* 787 */
         super.init(frame: frame) /* 788 */
@@ -51,6 +58,8 @@ class MetricCollectionViewCell: UICollectionViewCell {
         valueLabel.text = nil /* 810 */
     }
     
+    /// Configure view
+    /// - Parameter viewModel: Views ViewModel
     func configure(with viewModel: ViewModel) { /* 811 */
         nameLabel.text = viewModel.name+":" /* 812 */
         valueLabel.text = viewModel.value /* 813 */

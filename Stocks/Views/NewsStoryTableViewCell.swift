@@ -8,11 +8,15 @@
 import SDWebImage /* 387 */
 import UIKit
 
-class NewsStoryTableViewCell: UITableViewCell {
+/// News story tableView cell
+final class NewsStoryTableViewCell: UITableViewCell {
+    /// Cell identifier
     static let identifier = "NewsStoryTableViewCell" /* 304 */
     
+    /// Ideal height of cell
     static let preferredHeight: CGFloat = 140 /* 344 */
     
+    /// Cell ViewModel
     struct ViewModel { /* 305 */
         let source: String /* 341 */
         let headline: String /* 341 */
@@ -27,14 +31,14 @@ class NewsStoryTableViewCell: UITableViewCell {
         }
     }
     
-    //Source
+    ///Source label
     private let sourceLabel: UILabel = { /* 315 */
        let label = UILabel() /* 316 */
         label.font = .systemFont(ofSize: 14, weight: .medium) /* 317 */
         return label /* 318 */
     }()
     
-    //Headline
+    ///Headline label
     private let headlineLabel: UILabel = { /* 319 */
        let label = UILabel() /* 320 */
         label.font = .systemFont(ofSize: 22, weight: .regular) /* 321 */
@@ -42,7 +46,7 @@ class NewsStoryTableViewCell: UITableViewCell {
         return label /* 322 */
     }()
     
-    //Date
+    ///Date label
     private let dateLabel: UILabel = { /* 323 */
        let label = UILabel() /* 324 */
         label.textColor = .secondaryLabel /* 363 */
@@ -50,7 +54,7 @@ class NewsStoryTableViewCell: UITableViewCell {
         return label /* 326 */
     }()
     
-    //Image
+    ///Image View for story
     private let storyImageView: UIImageView = { /* 327 */
         let imageView = UIImageView() /* 328 */
         imageView.backgroundColor = .tertiarySystemBackground /* 357 */
@@ -60,6 +64,8 @@ class NewsStoryTableViewCell: UITableViewCell {
         imageView.layer.masksToBounds = true /* 332 */
         return imageView /* 333 */
     }()
+    
+    //MARK: - Init
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) { /* 306 */
         super.init(style: style, reuseIdentifier: reuseIdentifier) /* 307 */
@@ -116,6 +122,8 @@ class NewsStoryTableViewCell: UITableViewCell {
         storyImageView.image = nil /* 340 */
     }
     
+    /// Configure View
+    /// - Parameter viewModel: View ViewModel
     public func configure(with viewModel: ViewModel) { /* 314 */
         headlineLabel.text = viewModel.headline /* 353 */
         sourceLabel.text = viewModel.source /* 355 */

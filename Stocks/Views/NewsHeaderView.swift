@@ -7,20 +7,31 @@
 
 import UIKit
 
+/// Delegate to notify of header events
 protocol NewsHeaderViewDelegate: AnyObject { /* 271 */
+    ///Notify user tapped header button
+    /// - Parameter headerView: Ref of header view
     func newsHeaderViewDidTapAddButton(_ headerView: NewsHeaderView) /* 272 */
 }
 
-class NewsHeaderView: UITableViewHeaderFooterView {
+/// Tableview header for news
+final class NewsHeaderView: UITableViewHeaderFooterView {
+    ///HEader identifier
     static let identifier = "NewsHeaderView" /* 226 */
+    
+    ///Ideal height of header
     static let preferredHeight: CGFloat = 70 /* 227 */
     
+    /// Delegate instance for events
     weak var delegate: NewsHeaderViewDelegate? /* 273 */
     
+    /// ViewModel for ehader view
     struct ViewModel { /* 228 */
         let title: String /* 229 */
         let shouldShowAddButton: Bool /* 229 */
     }
+    
+    //MARK: - Private
     
     private let label: UILabel = { /* 239 */
         let label = UILabel() /* 240 */
@@ -52,11 +63,6 @@ class NewsHeaderView: UITableViewHeaderFooterView {
         fatalError() /* 233 */
     }
     
-    @objc private func didTapButton() { /* 261 */
-        //Call delegate
-        delegate?.newsHeaderViewDidTapAddButton(self) /* 274 */
-    }
-    
     override func layoutSubviews() { /* 234 */
         super.layoutSubviews() /* 235 */
         label.frame = CGRect(x: 14, y: 0, width: contentView.width-28, height: contentView.height) /* 262 */
@@ -76,6 +82,14 @@ class NewsHeaderView: UITableViewHeaderFooterView {
         label.text = nil /* 259 */
     }
     
+    /// Handle button tap
+    @objc private func didTapButton() { /* 261 */
+        //Call delegate
+        delegate?.newsHeaderViewDidTapAddButton(self) /* 274 */
+    }
+    
+    /// Configure view
+    /// - Parameter viewModel: View ViewModel
     public func configure(with viewModel: ViewModel) { /* 238 */
         label.text = viewModel.title /* 257 */
         button.isHidden = !viewModel.shouldShowAddButton /* 258 */

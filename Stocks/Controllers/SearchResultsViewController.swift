@@ -7,16 +7,22 @@
 
 import UIKit
 
+/// Delegate for serach results
 protocol SearchResultsViewControllerDelegate: AnyObject { /* 101 */
+    ///Notify delegate of selection
+    ///- Parameter searchResult: Result that was picked
     func searchResultsViewControllerDidSelect(searchResult: SearchResult) /* 102 */ /* 147 change String */
 }
 
-class SearchResultsViewController: UIViewController {
-    
+//VC to show search results
+final class SearchResultsViewController: UIViewController {
+    ///Delegate to get events
     weak var delegate: SearchResultsViewControllerDelegate? /* 103 */
     
+    /// Collection of results
     private var results: [SearchResult] = [] /* 113 */ /* 142 change String */
     
+    /// Primary view
     private let tableView: UITableView = { /* 80 */
         let table = UITableView() /* 81 */
         table.register(SearchResultTableViewCell.self,
@@ -24,6 +30,8 @@ class SearchResultsViewController: UIViewController {
         table.isHidden = true /* 158 */
         return table /* 82 */
     }()
+    
+    //MARK: - Lifecycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,19 +44,27 @@ class SearchResultsViewController: UIViewController {
         tableView.frame = view.bounds /* 100 */
     }
     
+    //MARK: - Private
+    
+    /// Set up our tableView
     private func setUpTable() { /* 89 */
         view.addSubview(tableView) /* 90 */
         tableView.delegate = self /* 91 */
         tableView.dataSource = self /* 92 */
     }
     
+    //MARK: - Public
+    
+    /// Udate results on VC
+    /// - Parameter results: Collection of new results
     public func update(with results: [SearchResult]) { /* 110 */ /* 141 change String */
         self.results = results /* 111 */
         tableView.isHidden = results.isEmpty /* 159 if empty - is hidden */
         tableView.reloadData() /* 112 */
     }
-    
 }
+
+//MARK: - TableView
 
 extension SearchResultsViewController: UITableViewDelegate, UITableViewDataSource { /* 93 */
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int { /* 94 */

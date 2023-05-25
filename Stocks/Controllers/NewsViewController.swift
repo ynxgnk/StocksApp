@@ -8,11 +8,14 @@
 import SafariServices /* 401 */
 import UIKit
 
-class NewsViewController: UIViewController {
+/// Controller to show news
+final class NewsViewController: UIViewController {
+    /// Type of news
     enum `Type` { /* 198 */
         case topStories /* 199 */
         case company(symbol: String) /* 200 */
         
+        ///Title for given type
         var title: String { /* 201 */
             switch self { /* 202 */
             case .topStories: /* 203 */
@@ -25,12 +28,14 @@ class NewsViewController: UIViewController {
     
     //MARK: - Properties
     
+    ///Collection of models
     private var stories = [NewsStory]() /* 275 */ /* 302 change [String]() */ /* 350 add [NewStory] and remove ["first"] */ /* 389 replace [] to () */
 //        NewsStory(category: "tech", datetime: 123, headline: "Some headline should go here!", image: "", related: "RElated", source: "CNBC", summary: "", url: "") /* 351 test */
     
-    
+    ///Instance of a type
     private let type: Type /* 205 */
     
+    /// Primary news view
     let tableView: UITableView = { /* 187 */
         let table = UITableView() /* 188 */
         table.register(NewsStoryTableViewCell.self,
@@ -43,6 +48,7 @@ class NewsViewController: UIViewController {
     
     //MARK: - Init
     
+    ///Create VC with type
     init(type: Type) { /* 206 */
         self.type = type /* 207 */
         super.init(nibName: nil, bundle: nil) /* 208 */
@@ -65,12 +71,14 @@ class NewsViewController: UIViewController {
     
     //MARK: - Private
     
+    /// Sets up tableView
     private func setUpTable() { /* 193 */
         view.addSubview(tableView) /* 211 */
         tableView.delegate = self /* 212 */
         tableView.dataSource = self /* 213 */
     }
     
+    /// Fetch news models
     private func fetchNews() { /* 194 */
         APICaller.shared.news(for: type) { [weak self] result in /* 390 */
             switch result { /* 391 */
@@ -85,13 +93,15 @@ class NewsViewController: UIViewController {
         }
     }
     
+    /// Open a story
+    /// - Parameter url: URL to open
     private func open(url: URL) { /* 197 */
         let vc = SFSafariViewController(url: url) /* 402 */
         present(vc, animated: true) /* 403 */
     }
-
 }
 
+//MARK: - UITableViewDelegate
 
 extension NewsViewController: UITableViewDelegate, UITableViewDataSource { /* 214 */
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int { /* 215 */
@@ -138,6 +148,7 @@ extension NewsViewController: UITableViewDelegate, UITableViewDataSource { /* 21
         open(url: url) /* 400 */
     }
     
+    /// Present an alert to show and error occured  when opening story
     private func presentFailedToOpenAlert() { /* 404 */
         let alert = UIAlertController(
             title: "Unable to Open",
