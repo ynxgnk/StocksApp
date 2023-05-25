@@ -107,7 +107,11 @@ final class WatchListViewController: UIViewController {
         var viewModels = [WatchListTableViewCell.ViewModel]() /* 530 */
         
         for (symbol, candleSticks) in watchlistMap { /* 531 */
-            let changePercentage = getChangePercentage(symbol: symbol, data: candleSticks) /* 539 */
+            let changePercentage = getChangePercentage(
+                symbol: symbol,
+                data: candleSticks
+            ) /* 539 */
+            
             viewModels.append(
                 .init(
                     symbol: symbol,
@@ -191,6 +195,7 @@ final class WatchListViewController: UIViewController {
         label.text = "Stocks" /* 74 */
         label.font  = .systemFont(ofSize: 40, weight: .medium) /* 75 */
         titleView.addSubview(label) /* 76 */
+        
         navigationItem.titleView = titleView /* 73 */
     }
     
@@ -253,6 +258,8 @@ extension WatchListViewController: SearchResultsViewControllerDelegate { /* 108 
     func searchResultsViewControllerDidSelect(searchResult: SearchResult) { /* 109 */ /* 150 change String */
         //Present stock details for given selection
         navigationItem.searchController?.searchBar.resignFirstResponder() /* 166 */
+        
+        HapticsManager.shared.vibrateForSelection() /* 889 */
         
         let vc = StockDetailsViewController(
             symbol: searchResult.displaySymbol,
@@ -323,6 +330,9 @@ extension WatchListViewController: UITableViewDelegate, UITableViewDataSource { 
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) { /* 444 */
         tableView.deselectRow(at: indexPath, animated: true) /* 445 */
+        
+        HapticsManager.shared.vibrateForSelection() /* 890 */
+        
         //Open Details for selection
         let viewModel = viewModels[indexPath.row] /* 656 */
         let vc = StockDetailsViewController(

@@ -37,7 +37,7 @@ final class MetricCollectionViewCell: UICollectionViewCell {
     override init(frame: CGRect) { /* 787 */
         super.init(frame: frame) /* 788 */
         contentView.clipsToBounds = true /* 804 */
-        addSubviews(nameLabel, valueLabel) /* 805 */
+        contentView.addSubviews(nameLabel, valueLabel) /* 805 */
     }
     
     required init?(coder: NSCoder) { /* 789 */
@@ -62,6 +62,6 @@ final class MetricCollectionViewCell: UICollectionViewCell {
     /// - Parameter viewModel: Views ViewModel
     func configure(with viewModel: ViewModel) { /* 811 */
         nameLabel.text = viewModel.name+":" /* 812 */
-        valueLabel.text = viewModel.value /* 813 */
+        valueLabel.text = viewModel.value+"$" /* 813 */
     }
 }

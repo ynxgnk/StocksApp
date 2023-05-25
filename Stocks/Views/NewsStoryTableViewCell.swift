@@ -70,7 +70,7 @@ final class NewsStoryTableViewCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) { /* 306 */
         super.init(style: style, reuseIdentifier: reuseIdentifier) /* 307 */
         contentView.backgroundColor = .secondarySystemBackground /* 334 */
-        backgroundColor = nil /* 335 */
+        backgroundColor = .secondarySystemBackground /* 335 */
         addSubviews(sourceLabel, headlineLabel, dateLabel, storyImageView) /* 336 */
     }
     

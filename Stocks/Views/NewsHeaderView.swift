@@ -35,13 +35,13 @@ final class NewsHeaderView: UITableViewHeaderFooterView {
     
     private let label: UILabel = { /* 239 */
         let label = UILabel() /* 240 */
-        label.font = .systemFont(ofSize: 32, weight: .semibold) /* 241 */
+        label.font = .systemFont(ofSize: 32) /* 241 */
         return label /* 242 */
     }()
     
     let button: UIButton = { /* 243 */
        let button = UIButton() /* 244 */
-        button.setTitle("+Watchlist", for: .normal) /* 245 */
+        button.setTitle("+ Watchlist", for: .normal) /* 245 */
         button.backgroundColor = .systemBlue /* 246 */
         button.setTitleColor(.white, for: .normal) /* 247 */
         button.layer.cornerRadius = 8 /* 248 */

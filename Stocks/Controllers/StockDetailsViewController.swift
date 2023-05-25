@@ -141,7 +141,7 @@ final class StockDetailsViewController: UIViewController {
         group.notify(queue: .main) { [weak self] in /* 750 */
             self?.renderChart() /* 751 */
         }
-        renderChart() /* 669 */
+//        renderChart() /* 669 */
     }
     
     /// Fetch news for given type
@@ -170,15 +170,14 @@ final class StockDetailsViewController: UIViewController {
                 height: (view.width*0.7) + 100
             )
         ) /* 778 */
-        
-        headerView.backgroundColor = .systemBackground /* 782 */
+//        headerView.backgroundColor = .systemBackground /* 782 */
         
         var viewModels = [MetricCollectionViewCell.ViewModel]() /* 827 */
         if let metrics = metrics { /* 828 */
             viewModels.append(.init(name: "52W High", value: "\(metrics.AnnualWeekHigh)")) /* 829 */
             viewModels.append(.init(name: "52L High", value: "\(metrics.AnnualWeekLow)")) /* 830 */
             viewModels.append(.init(name: "52W Return", value: "\(metrics.AnnualWeekPriceReturnDaily)")) /* 831 */
-            viewModels.append(.init(name: "beta", value: "\(metrics.beta)")) /* 832 */
+            viewModels.append(.init(name: "Beta", value: "\(metrics.beta)")) /* 832 */
             viewModels.append(.init(name: "10D Vol.", value: "\(metrics.TenDayAverageTradingVolume)")) /* 833 */
         }
         
@@ -219,8 +218,6 @@ final class StockDetailsViewController: UIViewController {
 //MARK: - TableView
 
 extension StockDetailsViewController: UITableViewDelegate, UITableViewDataSource { /* 678 */
-    //681
-    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int { /* 682 */
         return stories.count /* 684 */
     }
@@ -262,6 +259,9 @@ extension StockDetailsViewController: UITableViewDelegate, UITableViewDataSource
         guard let url = URL(string: stories[indexPath.row].url) else { /* 709 */
             return /* 710 */
         }
+        
+        HapticsManager.shared.vibrateForSelection() /* 892 */
+        
         let vc = SFSafariViewController(url: url) /* 711 */
         present(vc, animated: true) /* 712 */
     }
@@ -271,6 +271,9 @@ extension StockDetailsViewController: UITableViewDelegate, UITableViewDataSource
 
 extension StockDetailsViewController: NewsHeaderViewDelegate { /* 679 */
     func newsHeaderViewDidTapAddButton(_ headerView: NewsHeaderView) { /* 680 */
+        
+        HapticsManager.shared.vibrate(for: .success) /* 893 */
+        
         //Add to watchlist
         headerView.button.isHidden = true /* 716 */
         PersistenceManager.shared.addToWatchList(

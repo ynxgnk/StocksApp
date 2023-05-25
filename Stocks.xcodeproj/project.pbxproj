@@ -122,7 +122,6 @@
 				BA19A9F32A1B2C1700F6D036 /* Views */,
 				BA19A9F12A1B2C0700F6D036 /* Models */,
 				BA19A9E62A1B2B7700F6D036 /* Assets.xcassets */,
-				BA19A9E82A1B2B7700F6D036 /* LaunchScreen.storyboard */,
 				BA19A9EB2A1B2B7700F6D036 /* Info.plist */,
 			);
 			path = Stocks;
@@ -154,6 +153,7 @@
 		BA19A9F32A1B2C1700F6D036 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				BA19A9E82A1B2B7700F6D036 /* LaunchScreen.storyboard */,
 				BA19AA042A1B37BB00F6D036 /* SearchResultTableViewCell.swift */,
 				BA19AA0A2A1BBE0000F6D036 /* NewsHeaderView.swift */,
 				BADAEFD32A1C7B96006F2CBA /* NewsStoryTableViewCell.swift */,
@@ -169,8 +169,8 @@
 			isa = PBXGroup;
 			children = (
 				BA19A9F62A1B2C6B00F6D036 /* APICaller.swift */,
-				BA19A9F82A1B2C8100F6D036 /* HapticsManager.swift */,
 				BA19A9FA2A1B2C9000F6D036 /* PersistenceManager.swift */,
+				BA19A9F82A1B2C8100F6D036 /* HapticsManager.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
