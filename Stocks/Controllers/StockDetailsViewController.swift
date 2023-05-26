@@ -182,7 +182,7 @@ final class StockDetailsViewController: UIViewController {
         }
         
         //Configure
-        let change = getChangePercentage(symbol: symbol, data: candleStickData) /* 880 */
+        let change = getChangePercentage(data: candleStickData) /* 880 */
         headerView.configure(
             chartViewModel: .init(
                 data: candleStickData.reversed().map { $0.close }, /* 861 change [] */
@@ -198,10 +198,9 @@ final class StockDetailsViewController: UIViewController {
     
     /// Get change percentage
     /// - Parameters:
-    ///   - symbol: Symbol of a company
     ///   - data: Collection of data
     /// - Returns: Percent
-    private func getChangePercentage(symbol: String, data: [CandleStick]) -> Double { /* 874 */
+    private func getChangePercentage(data: [CandleStick]) -> Double { /* 874 */
         let latestDate = data[0].date /* 875 */
         guard let latestClose = data.first?.close,
             let priorClose = data.first(where: {

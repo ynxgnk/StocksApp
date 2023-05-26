@@ -75,6 +75,8 @@ final class WatchListViewController: UIViewController {
     private func fetchWatchlistData() { /* 434 */
         let symbols = PersistenceManager.shared.watchlist /* 436 */
         
+        createPlaceholderViewModels() /* 919 */
+        
         let group = DispatchGroup() /* 473 */
         
         for symbol in symbols where watchlistMap[symbol] == nil { /* 437 */ /* 644 add where... */
@@ -102,13 +104,35 @@ final class WatchListViewController: UIViewController {
         }
     }
     
+    private func createPlaceholderViewModels() { /* 918 */
+        let symbols = PersistenceManager.shared.watchlist /* 920 */
+        symbols.forEach { item in /* 921 */
+            viewModels.append(
+                .init(symbol: item,
+                      companyName: UserDefaults.standard.string(forKey: item) ?? "Company",
+                      price: "0.00",
+                      changeColor: .systemGreen,
+                      changePercentage: "0.00",
+                      chartViewModel: .init(
+                        data: [],
+                        showLegend: false,
+                        showAxis: false,
+                        fillColor: .clear
+                      )
+                     )
+            ) /* 922 */
+        }
+        
+        self.viewModels = viewModels.sorted(by: { $0.symbol < $1.symbol }) /* 924 */
+        tableView.reloadData() /* 923 */
+    }
+    
     /// Creates view models from models
     private func createViewModels() { /* 528 */
         var viewModels = [WatchListTableViewCell.ViewModel]() /* 530 */
         
         for (symbol, candleSticks) in watchlistMap { /* 531 */
             let changePercentage = getChangePercentage(
-                symbol: symbol,
                 data: candleSticks
             ) /* 539 */
             
@@ -129,15 +153,14 @@ final class WatchListViewController: UIViewController {
             )
         }
 //        print("\n\n\(viewModels)\n\n") /* 566 */
-        self.viewModels = viewModels /* 533 */
+        self.viewModels = viewModels.sorted(by:  { $0.symbol < $1.symbol }) /* 533 */ /* 917 add .sorted.. */
     }
     
     /// Gets change percentage for symbol data
     /// - Parameters:
-    ///   - symbol: Symbol to check for
     ///   - data: Collection data
     /// - Returns: Double percentage
-    private func getChangePercentage(symbol: String, data: [CandleStick]) -> Double { /* 538 */
+    private func getChangePercentage(data: [CandleStick]) -> Double { /* 538 */
         let latestDate = data[0].date /* 541 */
         guard let latestClose = data.first?.close,
             let priorClose = data.first(where: {
