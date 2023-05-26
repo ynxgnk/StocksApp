@@ -5,7 +5,9 @@ target 'Stocks' do
   # Comment the next line if you don't want to use dynamic frameworks
   use_frameworks!
 
- pod 'FloatingPanel'
+pod 'FloatingPanel'
 pod 'SDWebImage'
 pod 'Charts'
 end
+
+
